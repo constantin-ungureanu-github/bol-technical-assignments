@@ -1,19 +1,14 @@
 package com.bol.test.assignment.product;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
 public class Product {
-    private int id;
-    private String title;
 
-    public Product(int id, String title) {
-        this.id = id;
-        this.title = title;
-    }
+    @Getter
+    private final int id;
 
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
+    @Getter
+    private final String title;
 }

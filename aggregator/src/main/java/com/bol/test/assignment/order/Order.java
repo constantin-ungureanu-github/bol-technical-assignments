@@ -1,25 +1,17 @@
 package com.bol.test.assignment.order;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
 public class Order {
-    private int id;
-    private int offerId;
-    private int productId;
 
-    public Order(int id, int offerId, int productId) {
-        this.id = id;
-        this.offerId = offerId;
-        this.productId = productId;
-    }
+    @Getter
+    private final int id;
 
-    public int getId() {
-        return id;
-    }
+    @Getter
+    private final int offerId;
 
-    public int getOfferId() {
-        return offerId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
+    @Getter
+    private final int productId;
 }

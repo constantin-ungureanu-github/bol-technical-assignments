@@ -2,38 +2,23 @@ package com.bol.test.assignment.aggregator;
 
 import com.bol.test.assignment.offer.OfferCondition;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
 public class EnrichedOrder {
-    private int id;
-    private int offerId;
-    private OfferCondition offerCondition;
-    private int productId;
-    private String productTitle;
+    @Getter
+    private final int id;
 
-    public EnrichedOrder(int id, int offerId, OfferCondition offerCondition, int productId, String productTitle) {
-        this.id = id;
-        this.offerId = offerId;
-        this.offerCondition = offerCondition;
-        this.productId = productId;
-        this.productTitle = productTitle;
-    }
+    @Getter
+    private final int offerId;
 
-    public int getId() {
-        return id;
-    }
+    @Getter
+    private final OfferCondition offerCondition;
 
-    public int getOfferId() {
-        return offerId;
-    }
+    @Getter
+    private final int productId;
 
-    public OfferCondition getOfferCondition() {
-        return offerCondition;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public String getProductTitle() {
-        return productTitle;
-    }
+    @Getter
+    private final String productTitle;
 }

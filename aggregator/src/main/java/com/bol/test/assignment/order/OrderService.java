@@ -1,8 +1,12 @@
 package com.bol.test.assignment.order;
 
-public class OrderService {
+import lombok.extern.slf4j.Slf4j;
 
-    public Order getOrder(int sellerId ) {
-        return new Order(1, 2,3);
+@Slf4j
+public class OrderService {
+    public Order getOrder(final int sellerId) {
+        log.info("New Order with seller id: {}, offer id: {}, product id: {}", sellerId, 2, 3);
+
+        return new Order(sellerId, 2, 3);
     }
 }
