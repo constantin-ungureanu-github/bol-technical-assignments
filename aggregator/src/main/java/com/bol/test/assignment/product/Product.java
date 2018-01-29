@@ -5,7 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public class Product {
-
     @Getter
     private final int id;
 

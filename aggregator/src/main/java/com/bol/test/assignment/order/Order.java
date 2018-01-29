@@ -5,7 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public class Order {
-
     @Getter
     private final int id;
 

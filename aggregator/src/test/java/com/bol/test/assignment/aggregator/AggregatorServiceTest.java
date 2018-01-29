@@ -21,13 +21,10 @@ import com.bol.test.assignment.product.Product;
 import com.bol.test.assignment.product.ProductService;
 
 public class AggregatorServiceTest {
-
     private final OrderService orderService = mock(OrderService.class);
     private final OfferService offerService = mock(OfferService.class);
     private final ProductService productService = mock(ProductService.class);
-
     private final AggregatorService aggregatorService = new AggregatorService(orderService, offerService, productService);
-
     private final int sellerId = 1;
     private final int orderId = 2;
     private final int offerId = 3;
@@ -37,6 +34,19 @@ public class AggregatorServiceTest {
     @Test
     public void simpleHappyFlow() throws ExecutionException, InterruptedException {
         when(orderService.getOrder(sellerId)).thenReturn(new Order(orderId, offerId, productId));
+        when(offerService.getOffer(offerId)).thenReturn(new Offer(offerId, AS_NEW));
+        when(productService.getProduct(productId)).thenReturn(new Product(productId, title));
+
+        final EnrichedOrder enrichedOrder = aggregatorService.enrich(sellerId);
+        assertThat(enrichedOrder.getId(), is(orderId));
+    }
+
+    @Test
+    public void orderServiceIsSlow() throws Exception {
+        when(orderService.getOrder(sellerId)).thenAnswer((final InvocationOnMock invocationOnMock) -> {
+            Thread.sleep(1500);
+            return new Order(orderId, offerId, productId);
+        });
         when(offerService.getOffer(offerId)).thenReturn(new Offer(offerId, AS_NEW));
         when(productService.getProduct(productId)).thenReturn(new Product(productId, title));
 
@@ -60,6 +70,13 @@ public class AggregatorServiceTest {
         assertThat(enrichedOrder.getId(), is(orderId));
         assertThat(enrichedOrder.getOfferCondition(), is(AS_NEW));
         assertThat(enrichedOrder.getProductTitle(), is(title));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void orderServiceFailed() throws Exception {
+        when(orderService.getOrder(sellerId)).thenThrow(new RuntimeException("Order service failed"));
+
+        aggregatorService.enrich(sellerId);
     }
 
     @Test
@@ -99,12 +116,5 @@ public class AggregatorServiceTest {
         assertNull(enrichedOrder.getProductTitle());
         assertThat(enrichedOrder.getOfferId(), is(-1));
         assertThat(enrichedOrder.getOfferCondition(), is(UNKNOWN));
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void orderServiceFailed() throws Exception {
-        when(orderService.getOrder(sellerId)).thenThrow(new RuntimeException("Order service failed"));
-
-        aggregatorService.enrich(sellerId);
     }
 }

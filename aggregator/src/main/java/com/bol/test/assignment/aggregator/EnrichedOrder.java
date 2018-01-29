@@ -5,7 +5,9 @@ import com.bol.test.assignment.offer.OfferCondition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
+@lombok.Builder
 public class EnrichedOrder {
     @Getter
     private final int id;
