@@ -49,7 +49,7 @@ public class AggregatorService {
     }
 
     /**
-     * Enrich the offer with information from {@link Offer} and {@link Product}.
+     * Enrich the order with information from {@link Offer} and {@link Product}.
      *
      * @param sellerId
      *            the seller id used to retrieve the {@link Order} containing the @link Offer} and {@link Product}.
@@ -102,7 +102,7 @@ public class AggregatorService {
     }
 
     /**
-     * Retrieve offer and product from the {@link OfferService} and {@link ProductService} within a timeout.
+     * Retrieve the offer and product from the {@link OfferService} and {@link ProductService} within a timeout.
      * First submit both the offer and product {@link Callable}, only after fetch the data.
      *
      * @param order
@@ -180,7 +180,7 @@ public class AggregatorService {
     }
 
     /**
-     * Adds the order data.
+     * Adds the order information to the builder {@link EnrichedOrderBuilder}.
      *
      * @param builder
      *            the {@link EnrichedOrderBuilder} builder.
