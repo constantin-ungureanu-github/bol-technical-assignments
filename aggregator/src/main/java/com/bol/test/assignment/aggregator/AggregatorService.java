@@ -64,8 +64,8 @@ public class AggregatorService {
         final EnrichedOrderBuilder builder = EnrichedOrder.builder();
 
         try {
-            final Order order = retrieveOrder(executorService, sellerId);
-            final Map.Entry<Offer, Product> offerProductEntry = retrieveOfferAndProduct(executorService, order);
+            final Order order = retrieveOrder(sellerId);
+            final Map.Entry<Offer, Product> offerProductEntry = retrieveOfferAndProduct(order);
 
             enrichData(builder, order, offerProductEntry);
         } catch (final TimeoutException e) {
@@ -84,8 +84,6 @@ public class AggregatorService {
     /**
      * Retrieve order from the {@link OrderService} within a timeout.
      *
-     * @param executorService
-     *            the executor service used.
      * @param sellerId
      *            the id of the seller used to retrieve the order.
      * @return the {@link Order} order.
@@ -96,7 +94,7 @@ public class AggregatorService {
      * @throws TimeoutException
      *             the timeout exception
      */
-    private Order retrieveOrder(final ExecutorService executorService, final int sellerId) throws InterruptedException, ExecutionException, TimeoutException {
+    private Order retrieveOrder(final int sellerId) throws InterruptedException, ExecutionException, TimeoutException {
         final Order order = executorService.submit(() -> {
             return orderService.getOrder(sellerId);
         }).get(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
@@ -107,13 +105,11 @@ public class AggregatorService {
      * Retrieve offer and product from the {@link OfferService} and {@link ProductService} within a timeout.
      * First submit both the offer and product {@link Callable}, only after fetch the data.
      *
-     * @param executorService
-     *            the executor service
      * @param order
      *            the {@link Order} order containing offer id and product id.
      * @return the pair of {@link Offer} and {@link Product}
      */
-    private Map.Entry<Offer, Product> retrieveOfferAndProduct(final ExecutorService executorService, final Order order) {
+    private Map.Entry<Offer, Product> retrieveOfferAndProduct(final Order order) {
         final Future<Offer> offerFuture = executorService.submit(() -> {
             return offerService.getOffer(order.getOfferId());
         });
