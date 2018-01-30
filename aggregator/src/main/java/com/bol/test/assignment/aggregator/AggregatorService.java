@@ -49,10 +49,10 @@ public class AggregatorService {
     }
 
     /**
-     * Enrich the offer with data from .
+     * Enrich the offer with information from {@link Offer} and {@link Product}.
      *
      * @param sellerId
-     *            the seller id.
+     *            the seller id used to retrieve the {@link Order} containing the @link Offer} and {@link Product}.
      * @return the enriched order
      * @throws ExecutionException
      *             the execution exception
