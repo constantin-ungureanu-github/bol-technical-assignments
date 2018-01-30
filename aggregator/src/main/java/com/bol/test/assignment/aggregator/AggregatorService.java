@@ -121,7 +121,7 @@ public class AggregatorService {
         final Offer offer = fetchOffer(offerFuture);
         final Product product = fetchProduct(productFuture);
 
-        // The pair is needed as a data structure to group the offer and order.
+        // The pair is needed as a data structure to group the offer and product.
         // Grouping is needed since is the result of one method.
         return new AbstractMap.SimpleImmutableEntry<>(offer, product);
     }
