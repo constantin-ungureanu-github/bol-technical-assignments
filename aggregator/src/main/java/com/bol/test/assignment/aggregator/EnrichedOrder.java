@@ -3,11 +3,12 @@ package com.bol.test.assignment.aggregator;
 import com.bol.test.assignment.offer.OfferCondition;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 @AllArgsConstructor
-@lombok.Builder
 public class EnrichedOrder {
     @Getter
     private final int id;
